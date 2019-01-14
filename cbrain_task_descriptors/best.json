@@ -52,6 +52,7 @@
         {
             "id": "sensor_types", 
             "name": "Sensor types", 
+            "description": "The data sensors types to process. If, for instance, your input recording data contains both EEG and MEG channels, then, you could choose to process only the EEG channels by setting this parameter to 'EEG'.",
             "type": "String",
             "optional": false,
             "list": true,
@@ -66,7 +67,7 @@
         {
             "id": "reconstruction_window", 
             "name": "Reconstruction time window", 
-            "description": "User should know its recording data time definition and provide '[time_begin, time_end]' (with time in seconds)",
+            "description": "This is the portion of your input recording data to reconstruct.",
             "type": "Number",
             "optional": false,
             "list": true,
@@ -78,7 +79,7 @@
         {
             "id": "baseline_window", 
             "name": "Baseline time window", 
-            "description": "User should know its baseline data time definition and provide '[time_begin, time_end]' (with time in seconds)",
+            "description": "This is the portion of your baseline data to use for estimating a noise covariance matrix.",
             "type": "Number",
             "optional": false,
             "list": true,
@@ -90,7 +91,7 @@
         {
             "id": "baseline", 
             "name": "Baseline data", 
-            "description": "Path to a file with extension '.mat'. NOTE: if the string is empty (default) then the baseline data will be extracted from the recording data.",
+            "description": "This is the path to your baseline file if any. If no baseline file is specified, then the baseline data will be extracted from within the recording data.",
             "type": "File",
             "optional": true,
             "command-line-flag": "baseline",
@@ -99,6 +100,7 @@
         {
             "id": "normalization", 
             "name": "Normalization",
+            "description": "Normalization strategy used for computing the solution. If adaptive, a minimum solution is used to normalize the data.",
             "type": "String", 
             "optional": true,
             "default-value": "adaptive",
@@ -112,7 +114,7 @@
         {
             "id": "clustering_method", 
             "name": "Clustering method",
-            "description": "If 'dynamic' is selected, the option 'MSP window' is used)",
+            "description": "If dynamic, then the cortical parcels are computed within consecutive time windows specified with the option: MSP window. If static, then one set of cortical parcels is computed for the whole data.",
             "type": "String", 
             "optional": true,
             "default-value": "static",
@@ -140,7 +142,7 @@
         {
             "id": "msp_window", 
             "name": "MSP window",
-            "description": "Used only if 'Clusters type' is set to 'dynamic')",
+            "description": "Used when clustering method is set to 'dynamic', this is the size of the sliding window in millisecond (ms).",
             "type": "Number",
             "optional": true,
             "minimum": 0,
@@ -151,7 +153,7 @@
         {
             "id": "msp_threshold_method", 
             "name": "MSP scores threshold method",
-            "description": "If 'dynamic' is selected, the option 'MSP scores threshold' is used)",
+            "description": "Thresholding method applied to the MSP scores. If set to 'fdr' then thresholds are learned from baseline. Otherwise, the option 'MSP scores threshold' is used.",
             "type": "String", 
             "optional": true,
             "default-value": "arbitrary",
@@ -179,7 +181,7 @@
         {
             "id": "msp_threshold", 
             "name": "MSP scores threshold",
-            "description": "Used only if 'MSP scores threshold method' is set to 'arbitrary'",
+            "description": "Used when MSP scores threshold method is set to 'arbitrary', whole brain parcellation is set to 0.",
             "type": "Number",
             "optional": true,
             "minimum": 0,
@@ -191,6 +193,7 @@
         {
             "id": "neighborhood_order", 
             "name": "Neighborhood order",
+            "description": "Sets maximal size of cortical parcels (initial source configuration for MEM).",
             "type": "Number",
             "optional": true,
             "integer": true,
@@ -202,6 +205,7 @@
         {
             "id": "spatial_smoothing", 
             "name": "Spatial smoothing",
+            "description": "Smoothness of MEM solution: spatial regularization of the MEM (linear decay of spatial source correlations).",
             "type": "Number",
             "optional": true,
             "minimum": 0,
@@ -213,7 +217,7 @@
         {
             "id": "active_mean_init", 
             "name": "Active mean initialization",
-            "description": "1: regular minimum norm, 2: default – null hypothesis, 3: MSP-regularized minimum norm), 4: L-curve optimized Minimum Norm Estimate",
+            "description": "Initialization method of the active mean of each cluster.",
             "type": "Number",
             "optional": true,
             "integer": true,
@@ -230,7 +234,7 @@
         {
             "id": "active_proba_init", 
             "name": "Active probability initialization",
-            "description": "1: mean MSP scores, 2: max MSP scores, 3: default – median MSP scores, 4: equal to 0.5, 5: equal to 1",
+            "description": "Initialization method of the active probability of each cluster.",
             "type": "Number",
             "optional": true,
             "integer": true,
@@ -248,7 +252,7 @@
         {
             "id": "lambda_init", 
             "name": "Lambda initialization",
-            "description": "0: null hypothesis, 1: default – random",
+            "description": "Initialization method of the sensor weights vector.",
             "type": "Number",
             "optional": true,
             "integer": true,
@@ -263,6 +267,7 @@
         {
             "id": "active_proba_threshold", 
             "name": "Active probability threshold",
+            "description": "Used to exclude clusters with low probability from the computed solution.",
             "type": "Number",
             "optional": true,
             "minimum": 0,
@@ -274,6 +279,7 @@
         {
             "id": "active_var_coef", 
             "name": "Active variance coefficient",
+            "description": "A weight applied to the active variance of each cluster.",
             "type": "Number",
             "optional": true,
             "minimum": 0,
@@ -285,6 +291,7 @@
         {
             "id": "inactive_var_coef", 
             "name": "Inactive variance coefficient",
+            "description": "A weight applied to the inactive variance of each cluster.",
             "type": "Number",
             "optional": true,
             "minimum": 0,
@@ -296,7 +303,7 @@
         {
             "id": "noise_cov_method", 
             "name": "Noise covariance method",
-            "description": "0: identity, 1: diagonal with same variance along diagonal, 2: default – diagonal, 3: full, 4: wavelet-based",
+            "description": "The performance of the MEM is tied to a consistent estimation of the noise covariance matrix. We recommend using the 'diagonal' method.",
             "type": "Number",
             "optional": true,
             "integer": true,
@@ -314,6 +321,7 @@
         {
             "id": "optim_method", 
             "name": "Optimization routine",
+            "description": "'fminunc': MATLAB standard unconstrained optimization (optimization toolbox required). 'minFunc': Unconstrained optimization, copyright Mark Schmidt, INRIA.",
             "type": "String", 
             "optional": true,
             "default-value": "fminunc",
