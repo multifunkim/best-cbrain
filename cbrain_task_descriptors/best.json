@@ -3,9 +3,10 @@
     "container-image": {
         "image": "MontrealSergiy/BEst",
         "type": "singularity"
-    }, 
+    },
     "name": "BEst", 
     "author": "Obaï Bin Ka’b Ali",
+    "doi": "10.5281/zenodo.2541125",
     "description": "EEG/MEG source localisation techniques based upon the Maximum Entropy on the Mean framework", 
     "inputs": [
         {
