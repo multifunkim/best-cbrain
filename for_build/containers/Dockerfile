@@ -1,7 +1,8 @@
-FROM multifunkim/mcr:latest
+FROM multifunkim/matlab-runtime:latest
 
 LABEL maintainer="Obai Bin Ka'b Ali @aliobaibk"
 LABEL version="1.1"
+
 
 
 # Environment
@@ -10,10 +11,12 @@ ENV BEST_ROOT=/usr/local/Multi_FunkIm/BEst \
     BEST_APP_DIR="$BEST_ROOT"/application
 
 
+
 # Copy BEst app and test data
 # (files could be hosted in a server in the future for auto build)
 COPY best-data.zip /tmp/
 COPY best-app.zip /tmp/
+
 
 
 # Install BEst
@@ -23,6 +26,7 @@ RUN mkdir -p "$BEST_ROOT" && \
     unzip -q /tmp/best-app.zip -d "$BEST_APP_DIR" && \
     rm -rf /tmp/* && \
     chmod +x -R "$BEST_APP_DIR"
+
 
 
 # Update the path
