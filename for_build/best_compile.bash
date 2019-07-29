@@ -133,7 +133,7 @@ echo -e "\n     - Compiling..."
 
 app_zip="$output_name".zip
 app_dir="$tmp_dir"/"${app_zip%'.zip'}"
-mkdir "$best_lib" "$app_dir"
+mkdir "$app_dir"
 
 cp "$this_loc"/LICENSE "$app_dir"
 

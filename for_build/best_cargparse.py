@@ -73,7 +73,7 @@ def check_iargs_parser(iargs):
     parser.add_argument('-n', '--file-name', nargs=1, type=str,
                         default="best-" + datetime.now().strftime("%y%m%d%H%M%S"),
                         help=dedent('''\
-                        The name of the generated archive.
+                        The name of the generated archive. Just don't call it 'lib'.
                          
                         (default: %(default)s)
                         (type: %(type)s)
