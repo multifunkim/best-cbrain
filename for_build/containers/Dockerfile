@@ -5,9 +5,9 @@ LABEL version="1.1"
 
 
 # Environment
-ENV BEST_ROOT /usr/local/Multi_FunkIm/BEst
-ENV BEST_DATA_DIR "$BEST_ROOT"/data
-ENV BEST_APP_DIR "$BEST_ROOT"/application
+ENV BEST_ROOT=/usr/local/Multi_FunkIm/BEst \
+    BEST_DATA_DIR="$BEST_ROOT"/data \
+    BEST_APP_DIR="$BEST_ROOT"/application
 
 
 # Copy BEst app and test data
@@ -22,5 +22,8 @@ RUN mkdir -p "$BEST_ROOT" && \
     unzip -q /tmp/best-data.zip -d "$BEST_DATA_DIR" && \
     unzip -q /tmp/best-app.zip -d "$BEST_APP_DIR" && \
     rm -rf /tmp/* && \
-    chmod +x -R "$BEST_APP_DIR" && \
-    PATH=$BEST_APP_DIR:$PATH
+    chmod +x -R "$BEST_APP_DIR"
+
+
+# Update the path
+ENV PATH="$BEST_APP_DIR:$PATH"
