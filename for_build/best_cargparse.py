@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.5
 # -*- coding: utf-8 -*-
 # 
-# Help message for compiling BEst (meant to be used with the BEst compiling script)
+# Check the inputs for compiling BEst (meant to be used with the BEst compiling BASH script)
 # 
 # Last revision: July, 2019
 # Maintainer: Obai Bin Ka'b Ali @aliobaibk
