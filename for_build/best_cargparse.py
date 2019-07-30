@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.5
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # 
 # Check the inputs for compiling BEst (meant to be used with the BEst compiling BASH script)
@@ -48,10 +48,9 @@ def check_iargs_parser(iargs):
          
         '''),
         formatter_class=RawTextHelpFormatter,
-        add_help=False,
-        allow_abbrev=False)
+        add_help=False)
 
-    parser.add_argument('-h', '--help',
+    parser.add_argument('-h',
                         action='help',
                         help=dedent('''\
                         Shows this help message and exits.
