@@ -57,7 +57,7 @@ def check_iargs_parser(iargs):
                         ____________________________________________________________
                         '''))
     parser.add_argument('-d', '--output-dir', nargs=1, type=str,
-                        default='',
+                        default='.',
                         help=dedent('''\
                         The directory (absolute or relative) where to save the
                         output file. If not specified, then the current directory
