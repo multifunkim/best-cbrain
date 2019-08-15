@@ -34,6 +34,7 @@ def check_iargs_parser(iargs):
     """
     
     parser = ArgumentParser(
+        prog='best_compile.bash (or best_cargparse.py)',
         description=dedent('''\
         Brain Entropy is space and time (BEst)
         ____________________________________________________________________________________
