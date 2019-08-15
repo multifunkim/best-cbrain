@@ -297,7 +297,7 @@ switch argName
     case 'baselineWindow'
         f = @(x) checkTimeWindow(x);
     case 'baseline'
-        f = @(x) validateattributes(x,{'char'});
+        f = @(x) ischar(x);
     case 'normalization'
         f = @(x) checkString(x,validVal(argName));
     case 'clusteringMethod'
