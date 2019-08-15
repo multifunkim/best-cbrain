@@ -1,7 +1,7 @@
 FROM multifunkim/matlab-runtime:latest
 
 LABEL maintainer="Obai Bin Ka'b Ali @aliobaibk"
-LABEL version="1.1"
+LABEL version="1.0"
 
 
 
