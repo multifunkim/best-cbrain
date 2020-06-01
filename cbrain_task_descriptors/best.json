@@ -1,6 +1,6 @@
 {
     "author": "Multi FunkIm",
-    "command-line": "BEst [INPUT_DATA] [OUTPUT_NAME] [MEM_METHOD] [SENSORS_TYPE] [RECONSTRUCTION_WINDOW] [BASELINE_WINDOW] [BASELINE] [USE_PARALLEL] [NORMALIZATION] [CLUSTERING_METHOD] [MSP_WINDOW] [MSP_THRESHOLD_METHOD] [MSP_THRESHOLD] [NEIGHBORHOOD_ORDER] [SPATIAL_SMOOTHING] [ACTIVE_MEAN_INIT] [ACTIVE_PROBA_INIT] [LAMBDA_INIT] [ACTIVE_PROBA_THRESHOLD] [ACTIVE_VAR_COEF] [INACTIVE_VAR_COEF] [NOISE_COV_METHOD] [OPTIM_METHOD]",
+    "command-line": "BEst [INPUT_DATA] [OUTPUT_DIR_NAME] [MEM_METHOD] [SENSORS_TYPE] [RECONSTRUCTION_WINDOW] [BASELINE_WINDOW] [BASELINE] [USE_PARALLEL] [MAX_WORKERS] [NORMALIZATION] [CLUSTERING_METHOD] [MSP_WINDOW] [MSP_THRESHOLD_METHOD] [MSP_THRESHOLD] [NEIGHBORHOOD_ORDER] [SPATIAL_SMOOTHING] [ACTIVE_MEAN_INIT] [ACTIVE_PROBA_INIT] [LAMBDA_INIT] [ACTIVE_PROBA_THRESHOLD] [ACTIVE_VAR_COEF] [INACTIVE_VAR_COEF] [NOISE_COV_METHOD] [OPTIM_METHOD]",
     "container-image": {
         "image": "multifunkim/best-cbrain",
         "index": "shub://",
@@ -57,7 +57,7 @@
     "inputs": [
         {
             "command-line-flag": "inputData",
-            "description": "The input data (.mat) as exported from Brainstorm.",
+            "description": "The input data: a directory or a file (.mat, .tgz, .tar.gz, .tar) as exported from Brainstorm.",
             "id": "input_data",
             "name": "Input data",
             "optional": false,
@@ -65,14 +65,14 @@
             "value-key": "[INPUT_DATA]"
         },
         {
-            "command-line-flag": "outputName",
-            "default-value": "mem-sources",
-            "description": "Name of the output file",
-            "id": "output_name",
-            "name": "Output file name",
+            "command-line-flag": "outputDirName",
+            "default-value": "cbrain-mem-sources",
+            "description": "Name of the output directory",
+            "id": "output_dir_name",
+            "name": "Output directory name",
             "optional": false,
             "type": "String",
-            "value-key": "[OUTPUT_NAME]"
+            "value-key": "[OUTPUT_DIR_NAME]"
         },
         {
             "command-line-flag": "memMethod",
@@ -139,7 +139,29 @@
                 "true",
                 "false"
             ],
-            "value-key": "[USE_PARALLEL]"
+            "value-disables": {
+                "true": [],
+                "false": [
+                    "max_workers"
+                ]
+            },
+            "value-key": "[USE_PARALLEL]",
+            "value-requires": {
+                "true": [
+                    "maxWorkers"
+                ],
+                "false": []
+            }
+        },
+        {
+            "command-line-flag": "maxWorkers",
+            "default-value": 12,
+            "description": "Maximum number of workers for parallel processing.",
+            "id": "max_workers",
+            "name": "Number of workers",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[MAX_WORKERS]"
         },
         {
             "command-line-flag": "normalization",
@@ -373,7 +395,7 @@
         "$schema": "http://json-schema.org/draft-04/schema#",
         "additionalProperties": false,
         "dependencies": {},
-        "description": "Invocation schema for best.",
+        "description": "Invocation schema for BEst",
         "properties": {
             "active_mean_init": {
                 "enum": [
@@ -473,7 +495,7 @@
                     "minfunc"
                 ]
             },
-            "output_name": {
+            "output_dir_name": {
                 "type": "string"
             },
             "reconstruction_window": {
@@ -496,11 +518,16 @@
                     "true",
                     "false"
                 ]
+            },
+            "max_workers": {
+                "maximum": 40,
+                "minimum": 2,
+                "type": "integer"
             }
         },
         "required": [
             "input_data",
-            "output_name",
+            "output_dir_name",
             "mem_method",
             "sensors_type",
             "reconstruction_window",
@@ -516,20 +543,17 @@
             "id": "output_data",
             "name": "Output data",
             "optional": false,
-            "path-template": "[OUTPUT_NAME].mat",
-            "path-template-stripped-extensions": [
-                ".mat"
-            ]
+            "path-template": "[OUTPUT_DIR_NAME]"
         }
     ],
     "schema-version": "0.5",
     "suggested-resources": {
-        "cpu-cores": 2,
-        "ram": 12,
+        "cpu-cores": 12,
+        "ram": 60,
         "walltime-estimate": 100000
     },
     "tags": {
         "domain": "neuroinformatics"
     },
-    "tool-version": "1.0"
+    "tool-version": "1.1"
 }
