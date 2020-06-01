@@ -137,7 +137,7 @@ mkdir "$app_dir"
 
 cp "$this_loc"/LICENSE "$app_dir"
 
-mcc_cmd='mcc -m '"$best_main"' -a '"$best_lib"' -d '"$app_dir"' -o BEst -R -nodisplay -v'
+mcc_cmd='mcc -m '"$best_main"' -a '"$best_lib"' -d '"$app_dir"' -o best_samapp -R -nodisplay -v'
 "$matlab_cmd" -nodisplay -nosplash -r \
 'try, '"$mcc_cmd"', catch e, disp(getReport(e)), exit(1), end, exit(0);'
 
