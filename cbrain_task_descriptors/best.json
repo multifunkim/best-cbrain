@@ -1,13 +1,11 @@
 {
     "author": "Multi FunkIm",
-    "command-line": "BEst [INPUT_DATA] [OUTPUT_DIR_NAME] [MEM_METHOD] [SENSORS_TYPE] [RECONSTRUCTION_WINDOW] [BASELINE_WINDOW] [BASELINE] [USE_PARALLEL] [MAX_WORKERS] [NORMALIZATION] [CLUSTERING_METHOD] [MSP_WINDOW] [MSP_THRESHOLD_METHOD] [MSP_THRESHOLD] [NEIGHBORHOOD_ORDER] [SPATIAL_SMOOTHING] [ACTIVE_MEAN_INIT] [ACTIVE_PROBA_INIT] [LAMBDA_INIT] [ACTIVE_PROBA_THRESHOLD] [ACTIVE_VAR_COEF] [INACTIVE_VAR_COEF] [NOISE_COV_METHOD] [OPTIM_METHOD]",
+    "command-line": "best [INPUT_DATA] [OUTPUT_DIR_NAME] [MEM_METHOD] [SENSORS_TYPE] [RECONSTRUCTION_WINDOW] [BASELINE_WINDOW] [BASELINE] [USE_PARALLEL] [MAX_WORKERS] [NORMALIZATION] [CLUSTERING_METHOD] [MSP_WINDOW] [MSP_THRESHOLD_METHOD] [MSP_THRESHOLD] [NEIGHBORHOOD_ORDER] [SPATIAL_SMOOTHING] [ACTIVE_MEAN_INIT] [ACTIVE_PROBA_INIT] [LAMBDA_INIT] [ACTIVE_PROBA_THRESHOLD] [ACTIVE_VAR_COEF] [INACTIVE_VAR_COEF] [NOISE_COV_METHOD] [OPTIM_METHOD]",
     "container-image": {
-        "image": "multifunkim/best-cbrain",
-        "index": "shub://",
-        "type": "singularity"
+        "image": "multifunkim/best",
+        "type": "docker"
     },
     "description": "EEG/MEG source localisation methods based on the Maximum Entropy on the Mean framework",
-    "doi": "10.5281/zenodo.2541125",
     "groups": [
         {
             "id": "data_definition",
@@ -148,7 +146,7 @@
             "value-key": "[USE_PARALLEL]",
             "value-requires": {
                 "true": [
-                    "maxWorkers"
+                    "max_workers"
                 ],
                 "false": []
             }
@@ -555,5 +553,6 @@
     "tags": {
         "domain": "neuroinformatics"
     },
-    "tool-version": "1.1"
+    "tool-version": "1.1",
+    "doi": "10.5281/zenodo.3879740"
 }
