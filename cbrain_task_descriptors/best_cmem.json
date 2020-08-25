@@ -1,0 +1,422 @@
+{
+    "author": "Multi FunkIm",
+    "command-line": "best [INPUT_DATA] [OUTPUT_DIR_NAME] [MEM_METHOD] [SENSORS_TYPES] [RECONSTRUCTION_WINDOW] [BASELINE_WINDOW] [BASELINE] [NORMALIZATION] [CLUSTERING_METHOD] [MSP_WINDOW] [MSP_THRESHOLD_METHOD] [MSP_THRESHOLD] [NEIGHBORHOOD_ORDER] [SPATIAL_SMOOTHING] [ACTIVE_MEAN_INIT] [ACTIVE_PROBA_INIT] [LAMBDA_INIT] [ACTIVE_PROBA_THRESHOLD] [ACTIVE_VAR_COEF] [INACTIVE_VAR_COEF] [NOISE_COV_METHOD] [OPTIM_METHOD] [USE_PARALLEL] [MAX_WORKERS]",
+    "container-image": {
+        "image": "multifunkim/best:cbrain-mcv97",
+        "type": "docker"
+    },
+    "description": "EEG/MEG source localisation with Maximum Entropy on the Mean - cMEM (time series representation)",
+    "groups": [
+        {
+            "id": "data_definition",
+            "members": [
+                "sensors_types",
+                "reconstruction_window",
+                "baseline",
+                "baseline_window",
+                "normalization"
+            ],
+            "name": "Data definition"
+        },
+        {
+            "id": "job_spec",
+            "members": [
+                "use_parallel",
+                "max_workers"
+            ],
+            "name": "Job specifications"
+        },
+        {
+            "id": "clustering",
+            "members": [
+                "clustering_method",
+                "msp_window",
+                "msp_threshold_method",
+                "msp_threshold",
+                "neighborhood_order",
+                "spatial_smoothing"
+            ],
+            "name": "Clustering"
+        },
+        {
+            "id": "model_priors",
+            "members": [
+                "active_mean_init",
+                "active_proba_init",
+                "lambda_init",
+                "active_proba_threshold",
+                "active_var_coef",
+                "inactive_var_coef"
+            ],
+            "name": "Model priors"
+        },
+        {
+            "id": "solver_options",
+            "members": [
+                "noise_cov_method",
+                "optim_method"
+            ],
+            "name": "Solver options"
+        }
+    ],
+    "inputs": [
+        {
+            "command-line-flag": "inputData",
+            "description": "The input data: a directory or a file (.mat, .tgz, .tar.gz, .tar) as exported from Brainstorm.",
+            "id": "input_data",
+            "name": "Input data",
+            "optional": false,
+            "type": "File",
+            "value-key": "[INPUT_DATA]"
+        },
+        {
+            "command-line-flag": "outputDirName",
+            "default-value": "cbrain-cmem-sources",
+            "description": "Name of the output directory",
+            "id": "output_dir_name",
+            "name": "Output directory name",
+            "optional": false,
+            "type": "String",
+            "value-key": "[OUTPUT_DIR_NAME]"
+        },
+        {
+            "command-line-flag": "memMethod",
+            "default-value": "cMEM",
+            "id": "mem_method",
+            "name": "MEM method",
+            "optional": false,
+            "type": "String",
+            "value-choices": [
+                "cMEM"
+            ],
+            "value-key": "[MEM_METHOD]"
+        },
+        {
+            "command-line-flag": "sensorsTypes",
+            "description": "The data sensors types to process.",
+            "id": "sensors_types",
+            "name": "Sensors types",
+            "optional": false,
+            "type": "String",
+            "value-choices": [
+                "EEG",
+                "MEG",
+                "EEG+MEG"
+            ],
+            "value-key": "[SENSORS_TYPES]"
+        },
+        {
+            "command-line-flag": "reconstructionWindow",
+            "description": "This is the portion of your input recording data to reconstruct. The time window should be specified by two (increasing) numbers in seconds separated by a blank space: 'TIME_BEGIN TIME_END'. For example: '-0.5 1' means from -0.5 to 1 s.",
+            "id": "reconstruction_window",
+            "name": "Reconstruction time window",
+            "optional": false,
+            "type": "String",
+            "value-key": "[RECONSTRUCTION_WINDOW]"
+        },
+        {
+            "command-line-flag": "baselineWindow",
+            "description": "This is the portion of your baseline data to use for estimating a noise covariance matrix. The time window should be specified by two (increasing) numbers in seconds separated by a blank space: 'TIME_BEGIN TIME_END'. For example: '-1 0.5' means from -1 to 0.5 s.",
+            "id": "baseline_window",
+            "name": "Baseline time window",
+            "optional": false,
+            "type": "String",
+            "value-key": "[BASELINE_WINDOW]"
+        },
+        {
+            "command-line-flag": "baseline",
+            "description": "This is your baseline file (.mat) as exported from Brainstorm. If no baseline file is specified, then the baseline data will be extracted from within the (input) recording data.",
+            "id": "baseline",
+            "name": "Baseline data",
+            "optional": true,
+            "type": "File",
+            "value-key": "[BASELINE]"
+        },
+        {
+            "command-line-flag": "normalization",
+            "default-value": "adaptive",
+            "description": "Normalization strategy used for computing the solution. If set to 'adaptive', then a minimum norm solution will be used to normalize the data.",
+            "id": "normalization",
+            "name": "Normalization",
+            "optional": true,
+            "type": "String",
+            "value-choices": [
+                "adaptive",
+                "fixed"
+            ],
+            "value-key": "[NORMALIZATION]"
+        },
+        {
+            "command-line-flag": "useParallel",
+            "default-value": "true",
+            "description": "If set, then the samples will be reconstructed in parallel.",
+            "id": "use_parallel",
+            "name": "Parallel computing",
+            "optional": true,
+            "type": "String",
+            "value-choices": [
+                "true",
+                "false"
+            ],
+            "value-disables": {
+                "true": [],
+                "false": [
+                    "max_workers"
+                ]
+            },
+            "value-key": "[USE_PARALLEL]",
+            "value-requires": {
+                "true": [
+                    "max_workers"
+                ],
+                "false": []
+            }
+        },
+        {
+            "command-line-flag": "maxWorkers",
+            "default-value": 12,
+            "description": "Maximum number of workers for parallel processing.",
+            "id": "max_workers",
+            "integer": true,
+            "minimum": 2,
+            "name": "Number of workers",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[MAX_WORKERS]"
+        },
+        {
+            "command-line-flag": "clusteringMethod",
+            "default-value": "static",
+            "description": "With the method 'blockwise', cortical parcels are computed within consecutive time windows specified with the option: 'MSP window'. With the method 'static', only one set of cortical parcels is computed for the whole data.",
+            "id": "clustering_method",
+            "name": "Clustering method",
+            "optional": true,
+            "type": "String",
+            "value-choices": [
+                "static",
+                "blockwise"
+            ],
+            "value-disables": {
+                "blockwise": [],
+                "static": [
+                    "msp_window"
+                ]
+            },
+            "value-key": "[CLUSTERING_METHOD]",
+            "value-requires": {
+                "blockwise": [
+                    "msp_window"
+                ],
+                "static": []
+            }
+        },
+        {
+            "command-line-flag": "mspWindow",
+            "default-value": 10,
+            "description": "Used when clustering method is set to 'blockwise', this is the size of the sliding window in millisecond (ms).",
+            "id": "msp_window",
+            "minimum": 0,
+            "name": "MSP window",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[MSP_WINDOW]"
+        },
+        {
+            "command-line-flag": "mspThresholdMethod",
+            "default-value": "arbitrary",
+            "description": "Thresholding method applied to the MSP scores. If set to 'fdr', then thresholds will be learned from baseline. Otherwise, the option 'MSP scores threshold' is used.",
+            "id": "msp_threshold_method",
+            "name": "MSP scores threshold method",
+            "optional": true,
+            "type": "String",
+            "value-choices": [
+                "arbitrary",
+                "fdr"
+            ],
+            "value-disables": {
+                "arbitrary": [],
+                "fdr": [
+                    "msp_threshold"
+                ]
+            },
+            "value-key": "[MSP_THRESHOLD_METHOD]",
+            "value-requires": {
+                "arbitrary": [
+                    "msp_threshold"
+                ],
+                "fdr": []
+            }
+        },
+        {
+            "command-line-flag": "mspThreshold",
+            "default-value": 0,
+            "description": "This is used when 'MSP scores threshold method' is set to 'arbitrary'. A whole brain parcellation is done if this threshold is set to 0.",
+            "id": "msp_threshold",
+            "maximum": 1,
+            "minimum": 0,
+            "name": "MSP scores threshold",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[MSP_THRESHOLD]"
+        },
+        {
+            "command-line-flag": "neighborhoodOrder",
+            "default-value": 4,
+            "description": "This is used to set the maximal size of cortical parcels (initial source configuration for MEM).",
+            "id": "neighborhood_order",
+            "integer": true,
+            "minimum": 0,
+            "name": "Neighborhood order",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[NEIGHBORHOOD_ORDER]"
+        },
+        {
+            "command-line-flag": "spatialSmoothing",
+            "default-value": 0.6,
+            "description": "Smoothness of MEM solution: spatial regularization of the MEM (linear decay of spatial source correlations).",
+            "id": "spatial_smoothing",
+            "maximum": 1,
+            "minimum": 0,
+            "name": "Spatial smoothing",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[SPATIAL_SMOOTHING]"
+        },
+        {
+            "command-line-flag": "activeMeanInit",
+            "default-value": "2: null hypothesis",
+            "description": "Initialization method of the active mean of each cluster.",
+            "id": "active_mean_init",
+            "name": "Active mean initialization",
+            "optional": true,
+            "type": "String",
+            "value-choices": [
+                "1: regular minimum norm",
+                "2: null hypothesis",
+                "3: MSP-regularized minimum norm",
+                "4: L-curve optimized Minimum Norm Estimate"
+            ],
+            "value-key": "[ACTIVE_MEAN_INIT]"
+        },
+        {
+            "command-line-flag": "activeProbaInit",
+            "default-value": "3: median MSP scores",
+            "description": "Initialization method of the active probability of each cluster.",
+            "id": "active_proba_init",
+            "name": "Active probability initialization",
+            "optional": true,
+            "type": "String",
+            "value-choices": [
+                "1: mean MSP scores",
+                "2: max MSP scores",
+                "3: median MSP scores",
+                "4: equal to 0.5",
+                "5: equal to 1"
+            ],
+            "value-key": "[ACTIVE_PROBA_INIT]"
+        },
+        {
+            "command-line-flag": "lambdaInit",
+            "default-value": "1: random",
+            "description": "Initialization method of the sensor weights vector.",
+            "id": "lambda_init",
+            "name": "Lambda initialization",
+            "optional": true,
+            "type": "String",
+            "value-choices": [
+                "0: null hypothesis (vector of zeros)",
+                "1: random"
+            ],
+            "value-key": "[LAMBDA_INIT]"
+        },
+        {
+            "command-line-flag": "activeProbaThreshold",
+            "default-value": 0,
+            "description": "A threshold used to exclude clusters with low probability from the computed solution.",
+            "id": "active_proba_threshold",
+            "maximum": 1,
+            "minimum": 0,
+            "name": "Active probability threshold",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[ACTIVE_PROBA_THRESHOLD]"
+        },
+        {
+            "command-line-flag": "activeVarCoef",
+            "default-value": 0.05,
+            "description": "A weight applied to the active variance of each cluster.",
+            "id": "active_var_coef",
+            "maximum": 1,
+            "minimum": 0,
+            "name": "Active variance coefficient",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[ACTIVE_VAR_COEF]"
+        },
+        {
+            "command-line-flag": "inactiveVarCoef",
+            "default-value": 0,
+            "description": "A weight applied to the inactive variance of each cluster.",
+            "id": "inactive_var_coef",
+            "maximum": 1,
+            "minimum": 0,
+            "name": "Inactive variance coefficient",
+            "optional": true,
+            "type": "Number",
+            "value-key": "[INACTIVE_VAR_COEF]"
+        },
+        {
+            "command-line-flag": "noiseCovMethod",
+            "default-value": "2: Diagonal matrix",
+            "description": "The performance of the MEM is tied to a consistent estimation of the noise covariance matrix. We recommend using the method: '2: Diagonal matrix'.",
+            "id": "noise_cov_method",
+            "name": "Noise covariance method",
+            "optional": true,
+            "type": "String",
+            "value-choices": [
+                "0: Identity matrix",
+                "1: Scalar matrix",
+                "2: Diagonal matrix",
+                "3: Full",
+                "4: Wavelet-based"
+            ],
+            "value-key": "[NOISE_COV_METHOD]"
+        },
+        {
+            "command-line-flag": "optimMethod",
+            "default-value": "fminunc",
+            "description": "'fminunc': MATLAB standard unconstrained optimization routine. 'minfunc': (faster) Unconstrained optimization routine, copyright Mark Schmidt, INRIA.",
+            "id": "optim_method",
+            "name": "Optimization routine",
+            "optional": true,
+            "type": "String",
+            "value-choices": [
+                "fminunc",
+                "minfunc"
+            ],
+            "value-key": "[OPTIM_METHOD]"
+        }
+    ],
+    "name": "BEst - cMEM",
+    "output-files": [
+        {
+            "description": "Output data ready to be imported in Brainstorm.",
+            "id": "output_data",
+            "name": "Output data",
+            "optional": false,
+            "path-template": "[OUTPUT_DIR_NAME]"
+        }
+    ],
+    "schema-version": "0.5",
+    "suggested-resources": {
+        "cpu-cores": 12,
+        "ram": 60,
+        "walltime-estimate": 100000
+    },
+    "tags": {
+        "domain": "neuroinformatics"
+    },
+    "tool-version": "1.2",
+    "doi": "10.5281/zenodo.4000295"
+}
