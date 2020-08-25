@@ -125,7 +125,7 @@
         },
         {
             "command-line-flag": "baseline",
-            "description": "This is your baseline file (.mat) as exported from Brainstorm. If no baseline file is specified, then the baseline data will be extracted from within the (input) recording data.",
+            "description": "This is your baseline file (.mat, .tgz, .tar.gz, .tar) as exported from Brainstorm. If no baseline file is specified, then the baseline data will be extracted from within the (input) recording data.",
             "id": "baseline",
             "name": "Baseline data",
             "optional": true,
@@ -418,5 +418,5 @@
         "domain": "neuroinformatics"
     },
     "tool-version": "1.2",
-    "doi": "10.5281/zenodo.4000295"
+    "doi": "10.5281/zenodo.4000382"
 }
