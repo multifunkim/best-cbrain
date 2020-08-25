@@ -223,7 +223,7 @@
         },
         {
             "command-line-flag": "mspThresholdMethod",
-            "default-value": "arbitrary",
+            "default-value": "fdr",
             "description": "Thresholding method applied to the MSP scores. If set to 'fdr', then thresholds will be learned from baseline. Otherwise, the option 'MSP scores threshold' is used.",
             "id": "msp_threshold_method",
             "name": "MSP scores threshold method",
@@ -332,7 +332,7 @@
         },
         {
             "command-line-flag": "activeProbaThreshold",
-            "default-value": 0,
+            "default-value": 0.1,
             "description": "A threshold used to exclude clusters with low probability from the computed solution.",
             "id": "active_proba_threshold",
             "maximum": 1,
@@ -453,5 +453,5 @@
         "domain": "neuroinformatics"
     },
     "tool-version": "1.2",
-    "doi": "10.5281/zenodo.4000381"
+    "doi": "10.5281/zenodo.4000808"
 }

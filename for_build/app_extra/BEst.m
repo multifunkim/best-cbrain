@@ -295,7 +295,11 @@ switch argName
     case 'lambdaInit'
         val = '1: random';
     case 'activeProbaThreshold'
-        val = '0';
+        if strcmp(memMethod, 'cMEM')
+            val = '0';
+        elseif strcmp(memMethod, 'wMEM')
+            val = '0.1';
+        end
     case 'activeVarCoef'
         val = '0.05';
     case 'inactiveVarCoef'
