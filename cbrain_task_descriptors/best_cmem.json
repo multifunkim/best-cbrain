@@ -3,7 +3,8 @@
     "command-line": "best [INPUT_DATA] [OUTPUT_DIR_NAME] [MEM_METHOD] [SENSORS_TYPES] [RECONSTRUCTION_WINDOW] [BASELINE_WINDOW] [BASELINE] [NORMALIZATION] [CLUSTERING_METHOD] [MSP_WINDOW] [MSP_THRESHOLD_METHOD] [MSP_THRESHOLD] [NEIGHBORHOOD_ORDER] [SPATIAL_SMOOTHING] [ACTIVE_MEAN_INIT] [ACTIVE_PROBA_INIT] [LAMBDA_INIT] [ACTIVE_PROBA_THRESHOLD] [ACTIVE_VAR_COEF] [INACTIVE_VAR_COEF] [NOISE_COV_METHOD] [OPTIM_METHOD] [USE_PARALLEL] [MAX_WORKERS]",
     "container-image": {
         "image": "multifunkim/best:cbrain-mcv97",
-        "type": "docker"
+        "index": "docker://",
+        "type": "singularity"
     },
     "description": "EEG/MEG source localisation with Maximum Entropy on the Mean - cMEM (time series representation)",
     "groups": [
@@ -418,5 +419,5 @@
         "domain": "neuroinformatics"
     },
     "tool-version": "1.2",
-    "doi": "10.5281/zenodo.4000382"
+    "doi": "10.5281/zenodo.4010742"
 }
